@@ -2,13 +2,20 @@ import React from "react";
 import './App.css';
 import API_KEY from './api.js';
 import axios from 'axios';
+import WeatherContainer from './WeatherContainer.js';
+import { Route, Switch } from 'react-router-dom';
+import DailyWeather from "./DailyWeather";
 
 let setReverseGeocodeURI = (latitude, longitude) => {
   return 'https://api.openweathermap.org/geo/1.0/reverse?lat=' + latitude + '&lon=' + longitude + '&limit=5&appid=' + API_KEY;
 }
 
-let setForecastURI = (cityName) => {
-  return 'https://api.openweathermap.org/data/2.5/forecast/daily?q=' + cityName + '&mode=json&units=metric&cnt=7&appid=' + API_KEY;
+let setForecastURI = (latitude, longitude) => {
+  return 'https://api.openweathermap.org/data/2.5/forecast/hourly?lat=' + latitude + '&lon=' + longitude + '&cnt=6&units=metric&appid=' + API_KEY;
+}
+
+let setForecastURIWithCityName = (cityName) => {
+  return 'https://api.openweathermap.org/data/2.5/forecast/daily?q=' + cityName + '&cnt=6&units=metric&appid=' + API_KEY;
 }
 
 class App extends React.Component {
@@ -16,14 +23,14 @@ class App extends React.Component {
     super (props);
     this.state = {
       cityName: '',
-      forecast: {},
+      forecast: {}
     }
     this.setCityName = this.setCityName.bind(this);
     this.setForecast = this.setForecast.bind(this);
   }
   
-  setCityName(reverseGeoCodeURI) {
-    axios.get(reverseGeoCodeURI)
+  setCityName(latitude, longitude) {
+    axios.get(setReverseGeocodeURI(latitude, longitude))
     .then((response) => {
       this.setState({
         cityName: response.data[1].name
@@ -36,7 +43,7 @@ class App extends React.Component {
   }
 
   setForecast(cityName) {
-    axios.get(setForecastURI(cityName))
+    axios.get(setForecastURIWithCityName(cityName))
     .then((response) => {
       this.setState({
         forecast: response.data
@@ -56,7 +63,7 @@ class App extends React.Component {
     else {
       deviceLocation.getCurrentPosition(
         (position) => {
-          this.setCityName(setReverseGeocodeURI(position.coords.latitude, position.coords.longitude))
+          this.setCityName(position.coords.latitude, position.coords.longitude);
         },
         (error) => console.log(error)
       );
@@ -65,13 +72,33 @@ class App extends React.Component {
 
   render () {
     let cityName = this.state.cityName;
+    let forecast = this.state.forecast;
 
     return (
       <div>
         <header className="header">
           <h1>ReactJS Weather App</h1>
-          <h2>You are at {cityName}.</h2>
+          {
+            cityName && 
+            <p>You are at {cityName}.</p>
+          }
         </header>
+        
+        <footer>
+          <p>Created by <a href="https://linkedin">Tashfeen Mustafa Choudhury</a></p>
+        </footer>
+
+        <Switch>
+          <Route exact path="/">
+            {
+              forecast.list &&
+                <WeatherContainer weather={forecast.list} />
+            }
+          </Route>
+          <Route path="/day-of-week">
+            <DailyWeather />
+          </Route>
+        </Switch>
       </div>
     );
   }
