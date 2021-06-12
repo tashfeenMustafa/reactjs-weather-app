@@ -8,6 +8,9 @@ import Container from '@material-ui/core/Container';
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
+    },
+    weatherContainer: {
+        margin: '5% 0'
     }
 }))
 
@@ -21,7 +24,7 @@ const WeatherContainer = (props) => {
     })
 
     return (
-        <div className={classes.root}>
+        <div className={classes.root + ', ' + classes.weatherContainer}>
             <Container maxWidth="lg">
                 <Grid 
                     className="weather-container" 

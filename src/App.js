@@ -4,6 +4,7 @@ import API_KEY from './api.js';
 import axios from 'axios';
 import WeatherContainer from './WeatherContainer.js';
 import { Route, Switch } from 'react-router-dom';
+import Typography from '@material-ui/core/Typography';
 import DailyWeather from "./DailyWeather";
 
 let setReverseGeocodeURI = (latitude, longitude) => {
@@ -78,10 +79,14 @@ class App extends React.Component {
     return (
       <div>
         <header className="header">
-          <h1>ReactJS Weather App</h1>
+          <Typography variant="h1">
+            ReactJS Weather App
+          </Typography>
           {
             cityName && 
-            <p>You are at {cityName}.</p>
+            <Typography className="city" variant="h5">
+              You are at {cityName}
+            </Typography>
           }
         </header>
         

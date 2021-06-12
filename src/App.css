@@ -1,5 +1,10 @@
 .header {
   text-align: center;
+  margin: 2% 0 0 0;
+}
+
+.city {
+  margin-top: 3%;
 }
 
 .App {

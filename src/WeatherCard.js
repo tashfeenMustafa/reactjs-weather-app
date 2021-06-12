@@ -1,10 +1,10 @@
-import React from "react";
+import { React, useState } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import * as DateTime from 'datetime-js';
 import { Link } from 'react-router-dom';
-
+import './WeatherCard.css';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 function WeatherCard (props) {
     const classes = useStyles();
+    const [elevation, setElevation] = useState(1);
     const imgId = props.dailyWeather.weather[0].icon;
     const maxTemp = props.dailyWeather.temp.max;
     const minTemp = props.dailyWeather.temp.min; 
@@ -30,14 +31,19 @@ function WeatherCard (props) {
                 item 
                 lg={2}
             >   
-                <Link to={{
-                    pathname: `/${dayParams}`,
-                    state: {
-                        weatherData: props.dailyWeather
-                    }
-                }}>
-                    <Paper className={classes.paper}>
+                <Link 
+                    onMouseEnter={() => setElevation(elevation + 4)} 
+                    onMouseLeave={() => setElevation(elevation - 4)}    
+                    to={{
+                        pathname: `/${dayParams}`,
+                        state: {
+                            weatherData: props.dailyWeather
+                        }}}
+                >
+                    <Paper
                         
+                        elevation={elevation}
+                        className={classes.paper}>
                         <div className="day">
                             <h3>{day}</h3>
                         </div>
