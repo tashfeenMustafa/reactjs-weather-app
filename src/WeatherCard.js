@@ -2,7 +2,7 @@ import { React, useState } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import * as DateTime from 'datetime-js';
+import DateTime from 'datetime-js';
 import { Link } from 'react-router-dom';
 import './WeatherCard.css';
 
@@ -29,7 +29,7 @@ function WeatherCard (props) {
         <>
             <Grid
                 item 
-                lg={2}
+                lg={2} md={6} sm={12} xs={12}
             >   
                 <Link 
                     onMouseEnter={() => setElevation(elevation + 4)} 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useParams, useLocation } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
-import * as DateTime from 'datetime-js';
+import DateTime from 'datetime-js';
 import WbSunnyIcon from '@material-ui/icons/WbSunny';
 import NightsStayIcon from '@material-ui/icons/NightsStay';
 import FlareIcon from '@material-ui/icons/Flare';
