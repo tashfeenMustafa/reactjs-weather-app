@@ -10,9 +10,9 @@ let setReverseGeocodeURI = (latitude, longitude) => {
   return 'https://api.openweathermap.org/geo/1.0/reverse?lat=' + latitude + '&lon=' + longitude + '&limit=5&appid=' + API_KEY;
 }
 
-let setForecastURI = (latitude, longitude) => {
+/*let setForecastURI = (latitude, longitude) => {
   return 'https://api.openweathermap.org/data/2.5/forecast/hourly?lat=' + latitude + '&lon=' + longitude + '&cnt=6&units=metric&appid=' + API_KEY;
-}
+}*/
 
 let setForecastURIWithCityName = (cityName) => {
   return 'https://api.openweathermap.org/data/2.5/forecast/daily?q=' + cityName + '&cnt=6&units=metric&appid=' + API_KEY;
@@ -73,6 +73,7 @@ class App extends React.Component {
   render () {
     let cityName = this.state.cityName;
     let forecast = this.state.forecast;
+    let weatherContainer = forecast.list ? <WeatherContainer weather={forecast.list} /> : null;
 
     return (
       <div>
@@ -90,14 +91,11 @@ class App extends React.Component {
 
         <Switch>
           <Route exact path="/">
-            {
-              forecast.list &&
-                <WeatherContainer weather={forecast.list} />
-            }
+            {weatherContainer}
           </Route>
-          <Route path="/day-of-week">
-            <DailyWeather />
-          </Route>
+          <Route path="/:day">
+                <DailyWeather />
+            </Route>
         </Switch>
       </div>
     );

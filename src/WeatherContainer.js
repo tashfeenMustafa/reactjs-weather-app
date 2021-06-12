@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import WeatherCard from './WeatherCard.js';
 import './WeatherContainer.css';
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-export default function WeatherContainer (props) {
+const WeatherContainer = (props) => {
     const classes = useStyles();
 
     let weatherList = props.weather.map((day, index) => {
@@ -38,3 +38,5 @@ export default function WeatherContainer (props) {
         </div>
     )
 }
+
+export default WeatherContainer;
