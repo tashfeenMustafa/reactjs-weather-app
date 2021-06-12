@@ -44,7 +44,7 @@ const DailyWeather = (props) => {
                 >
                     <Grid
                         item 
-                        lg={6}
+                        lg={6} md={6} sm={6} xs={6}
                     >
                         <h1>{ day }</h1>
                         <h3>{ date }</h3>
